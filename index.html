@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RelateAqui - Infraestrutura da Cidade</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>RelateAqui</h1>
+    <p>Relate problemas de infraestrutura e acompanhe soluções</p>
+  </header>
+
+  <main>
+    <!-- Tela Inicial -->
+    <section id="home" class="active">
+      <h2>Bem-vindo(a)!</h2>
+      <p>O que você deseja fazer?</p>
+      <div class="buttons">
+        <button onclick="showReportForm()">Relatar Problema</button>
+        <button onclick="showMyRequests()">Acompanhar Solicitação</button>
+        <button onclick="showNews()">Notícias e Atualizações</button>
+      </div>
+    </section>
+
+    <!-- Tela de Relatar Problema -->
+    <section id="report-form">
+      <h2>Relatar Problema</h2>
+      <form>
+        <label for="category">Categoria:</label>
+        <select id="category" name="category" required>
+          <option value="">Selecione uma categoria</option>
+          <option value="transporte">Transporte Público</option>
+          <option value="ciclovias">Ciclovias</option>
+          <option value="iluminacao">Iluminação Pública</option>
+          <option value="limpeza">Limpeza e Saneamento</option>
+          <option value="patrimonio">Patrimônio Histórico</option>
+        </select>
+
+        <label for="location">Localização:</label>
+        <input type="text" id="location" name="location" placeholder="Ex: Rua X, Bairro Y" required>
+
+        <label for="description">Descrição:</label>
+        <textarea id="description" name="description" placeholder="Descreva o problema..." required></textarea>
+
+        <label for="photo">Foto (opcional):</label>
+        <input type="file" id="photo" name="photo">
+
+        <button type="submit">Enviar Relatório</button>
+      </form>
+      <button onclick="goBack()">Voltar</button>
+    </section>
+
+    <!-- Tela de Acompanhar Solicitação -->
+    <section id="my-requests">
+      <h2>Minhas Solicitações</h2>
+      <ul id="requests-list">
+        <!-- Exemplo de solicitação -->
+        <li>
+          <strong>Categoria:</strong> Ciclovias<br>
+          <strong>Localização:</strong> Rua Principal, Bairro Centro<br>
+          <strong>Status:</strong> Em andamento<br>
+          <button onclick="showRequestDetails(1)">Ver Detalhes</button>
+        </li>
+        <li>
+          <strong>Categoria:</strong> Iluminação Pública<br>
+          <strong>Localização:</strong> Praça da Igreja, Bairro Histórico<br>
+          <strong>Status:</strong> Resolvido<br>
+          <button onclick="showRequestDetails(2)">Ver Detalhes</button>
+        </li>
+      </ul>
+      <button onclick="goBack()">Voltar</button>
+    </section>
+
+    <!-- Tela de Detalhes da Solicitação -->
+    <section id="request-details">
+      <h2>Detalhes da Solicitação</h2>
+      <div id="details-content">
+        <!-- Conteúdo dinâmico será carregado aqui -->
+      </div>
+      <button onclick="showFeedbackForm()">Enviar Feedback</button>
+      <button onclick="goBack()">Voltar</button>
+    </section>
+
+    <!-- Tela de Feedback da Comunidade -->
+    <section id="feedback-form">
+      <h2>Feedback da Comunidade</h2>
+      <form>
+        <p>O problema foi resolvido?</p>
+        <label>
+          <input type="radio" name="feedback" value="sim" required> Sim
+        </label>
+        <label>
+          <input type="radio" name="feedback" value="nao"> Não
+        </label>
+        <label>
+          <input type="radio" name="feedback" value="parcialmente"> Parcialmente
+        </label>
+        <label for="feedback-comment">Comentários:</label>
+        <textarea id="feedback-comment" name="feedback-comment" placeholder="Adicione um comentário..."></textarea>
+        <button type="submit">Enviar Feedback</button>
+      </form>
+      <button onclick="goBack()">Voltar</button>
+    </section>
+
+    <!-- Tela de Notícias e Atualizações -->
+    <section id="news">
+      <h2>Notícias e Atualizações</h2>
+      <article>
+        <h3>Nova Ciclovia em Construção</h3>
+        <p>A prefeitura iniciou a construção de uma nova ciclovia no bairro Ponta Grossa. A previsão de conclusão é para o final do ano.</p>
+      </article>
+      <article>
+        <h3>Melhorias no Transporte Público</h3>
+        <p>Novos ônibus foram adquiridos e já estão em operação nas principais rotas da cidade. A frota foi atualizada para melhorar a experiência dos usuários.</p>
+      </article>
+      <button onclick="goBack()">Voltar</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 RelateAqui. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    // Função para mostrar o formulário de relatório
+    function showReportForm() {
+      hideAllSections();
+      document.getElementById('report-form').style.display = 'block';
+    }
+
+    // Função para mostrar a tela de solicitações
+    function showMyRequests() {
+      hideAllSections();
+      document.getElementById('my-requests').style.display = 'block';
+    }
+
+    // Função para mostrar a tela de detalhes da solicitação
+    function showRequestDetails(requestId) {
+      hideAllSections();
+      const detailsContent = document.getElementById('details-content');
+      if (requestId === 1) {
+        detailsContent.innerHTML = `
+          <h3>Solicitação #1</h3>
+          <p><strong>Categoria:</strong> Ciclovias</p>
+          <p><strong>Localização:</strong> Rua Principal, Bairro Centro</p>
+          <p><strong>Descrição:</strong> Buraco na ciclovia próximo à escola.</p>
+          <p><strong>Status:</strong> Em andamento</p>
+        `;
+      } else if (requestId === 2) {
+        detailsContent.innerHTML = `
+          <h3>Solicitação #2</h3>
+          <p><strong>Categoria:</strong> Iluminação Pública</p>
+          <p><strong>Localização:</strong> Praça da Igreja, Bairro Histórico</p>
+          <p><strong>Descrição:</strong> Falta de iluminação na praça.</p>
+          <p><strong>Status:</strong> Resolvido</p>
+        `;
+      }
+      document.getElementById('request-details').style.display = 'block';
+    }
+
+    // Função para mostrar o formulário de feedback
+    function showFeedbackForm() {
+      hideAllSections();
+      document.getElementById('feedback-form').style.display = 'block';
+    }
+
+    // Função para mostrar a tela de notícias
+    function showNews() {
+      hideAllSections();
+      document.getElementById('news').style.display = 'block';
+    }
+
+    // Função para voltar à tela inicial
+    function goBack() {
+      hideAllSections();
+      document.getElementById('home').style.display = 'block';
+    }
+
+    // Função para ocultar todas as seções
+    function hideAllSections() {
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+        section.style.display = 'none';
+      });
+    }
+
+    // Inicialmente, mostra a tela inicial
+    hideAllSections();
+    document.getElementById('home').style.display = 'block';
+  </script>
+</body>
+</html>
